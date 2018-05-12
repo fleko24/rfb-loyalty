@@ -13,8 +13,18 @@ apply plugin: com.bmuschko.gradle.docker.DockerRemoteApiPlugin
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 
 docker {
-    url = System.env.DOCKER_HOST
-    certPath = new File(System.env.DOCKER_CERT_PATH)
+    if (System.env.DOCKER_HOST){
+        url = System.env.DOCKER_HOST
+    }
+    if (System.env.DOCKER_CERT_PATH){
+        certPath = new File(System.env.DOCKER_CERT_PATH)
+    }
+    registryCredentials {
+        username = 'springframeworkguru'
+        password = {System.env.DOCKER_HUB_PwD}
+        email = 'john@springframework.guru'
+    }
+
 }
 
 task copyDockerFiles(type: Copy) {
